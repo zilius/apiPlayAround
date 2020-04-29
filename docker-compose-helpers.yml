@@ -1,0 +1,13 @@
+version: '3'
+services:
+  composer:
+    image: composer:1.9.1
+    volumes:
+      - ".:/app"
+    networks:
+      - message_board_network
+
+
+networks:
+  message_board_network:
+    driver: bridge
