@@ -5,9 +5,9 @@ services:
     volumes:
       - ".:/app"
     networks:
-      - message_board_network
+      - supermetrics_network
 
 
 networks:
-  message_board_network:
+  supermetrics_network:
     driver: bridge

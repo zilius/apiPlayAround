@@ -5,8 +5,8 @@ export HTTP_PORT = 8080
 export COMPOSE_PROJECT_NAME = supermetrics
 
 init:
-	mkdir tmp
-	mkdir tmp/nginx
+	mkdir -p tmp
+	mkdir -p tmp/nginx
 	touch tmp/nginx/access.log
 	touch tmp/nginx/error.log
 	make up
