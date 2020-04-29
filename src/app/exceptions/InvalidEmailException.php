@@ -1,7 +1,10 @@
 <?php
 
+namespace Src\App\Exceptions;
 
-class InvalidEmailException
+use Exception;
+
+class InvalidEmailException extends Exception
 {
 
 }

@@ -18,6 +18,6 @@ class SuperMetricsService
 
     public function registerToken(string $email, string $name): string
     {
-
+        if()
     }
 }

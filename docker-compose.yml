@@ -1,0 +1,45 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1.17.6
+    restart: always
+    ports:
+      - "${HTTP_PORT}:80"
+    volumes:
+      - ".:/src"
+      - "./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+    depends_on:
+      - php-fpm
+      - mysql
+    networks:
+      - supermetrics_network
+
+  php-fpm:
+    image: php:7.4.0-fpm
+    volumes:
+      - ".:/src"
+    networks:
+      - supermetrics_network
+
+  memcached:
+    image: memcached
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_HOST=127.0.0.1
+      - MYSQL_DATABASE=app
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=app
+    ports:
+      - "${MYSQL_PORT}:3306"
+    networks:
+      - supermetrics_network
+
+
+networks:
+  supermetrics_network:
+    driver: bridge
