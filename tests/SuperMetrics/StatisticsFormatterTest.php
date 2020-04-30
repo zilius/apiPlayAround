@@ -20,9 +20,9 @@ class StatisticsFormatterTest extends TestCase
 
         $result = $this->statisticsFormmater->groupMessagesByMonth($posts);
 
-        $this->assertEquals(count($result),3);
-        $this->assertArrayHasKey('2019-12',$result);
-        $this->assertArrayHasKey('2019-11',$result);
-        $this->assertArrayHasKey('2019-10',$result);
+        $this->assertEquals(count($result), 3);
+        $this->assertArrayHasKey('2019-12', $result);
+        $this->assertArrayHasKey('2019-11', $result);
+        $this->assertArrayHasKey('2019-10', $result);
     }
 }
