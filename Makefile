@@ -8,9 +8,9 @@ init:
 	mkdir -p tmp/nginx
 	touch tmp/nginx/access.log
 	touch tmp/nginx/error.log
-	make up
 	make composer-install
 	make composer cmd="dump-autoload -o"
+	make up
 
 up:
 	docker-compose up
