@@ -26,6 +26,16 @@ $token = $service->registerToken($email, $name);
 
 //2. Fetch the posts of a fictional user on a fictional social platform and process their posts. You will have 1000 posts over a six month period. Show stats on the following: - Average character length of a post / month - Longest post by character length / month - Total posts split by week - Average number of posts per user / month
 
-$service->fetchPosts($token);
+$posts = $service->fetchPosts($token);
+$stats = $service->makeStatisticsHappen($posts);
 
-//3. Design the above to be generic, extendable and easy to maintain by other staff members.
+echo "<h2>Results</h2>";
+foreach ($stats as $key => $monthsStats)
+{
+    echo "<h3>{$key}</h3>";
+    foreach ($monthsStats as $category => $monthStat)
+    {
+        echo "<h4>$category</h4>";
+        dump($monthStat);
+    }
+}

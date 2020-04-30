@@ -24,7 +24,7 @@ class SuperMetricsClient implements ClientInterface
     {
         $response = $this->client->request('GET', $this->apiUrl . $path, ['query' => $params]);
 
-        if ($response->getStatusCode() == 200) {
+        if ($response->getStatusCode() === 200) {
             return \GuzzleHttp\json_decode($response->getBody(), true);
         }
     }
@@ -33,7 +33,7 @@ class SuperMetricsClient implements ClientInterface
     {
         $response = $this->client->request('POST', $this->apiUrl . $path, ['form_params' => $params]);
 
-        if ($response->getStatusCode() == 200) {
+        if ($response->getStatusCode() === 200) {
             return \GuzzleHttp\json_decode($response->getBody(), true);
         }
     }

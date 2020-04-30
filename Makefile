@@ -22,7 +22,7 @@ composer-install:
 	docker-compose -f docker-compose-helpers.yml run composer install
 
 composer-require:
-	#example: make composer-require package="composer require doctrine/migrations"
+	#example: make composer-require package="doctrine/migrations"
 	docker-compose -f docker-compose-helpers.yml run composer require ${package}
 
 composer:
