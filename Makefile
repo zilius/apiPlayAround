@@ -25,6 +25,6 @@ composer-require:
 	#example: make composer-require package="composer require doctrine/migrations"
 	docker-compose -f docker-compose-helpers.yml run composer require ${package}
 
-	#example: make composer cmd="dump-autoload -o"
 composer:
+	#example: make composer cmd="dump-autoload -o"
 	docker-compose -f docker-compose-helpers.yml run composer ${cmd}
