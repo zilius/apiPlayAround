@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Phpfastcache\Helper\Psr16Adapter;
-use Src\App\Integrations\Supermetrics\SuperMetricsService;
+use Src\App\Integrations\Supermetrics\Service;
 
 define("DS", DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__));
@@ -17,7 +17,7 @@ Config::init();
 $email = "zygimantas.zilevicius@gmail.com";
 $name = "Zygimantas";
 $cache = new Psr16Adapter('Files');
-$service = new SuperMetricsService($cache);
+$service = new Service($cache);
 
 //To keep it simple I'll call every step of the task here, normally those actions would go into controller
 
@@ -29,13 +29,4 @@ $token = $service->registerToken($email, $name);
 $posts = $service->fetchPosts($token);
 $stats = $service->makeStatisticsHappen($posts);
 
-echo "<h2>Results</h2>";
-foreach ($stats as $key => $monthsStats)
-{
-    echo "<h3>{$key}</h3>";
-    foreach ($monthsStats as $category => $monthStat)
-    {
-        echo "<h4>$category</h4>";
-        dump($monthStat);
-    }
-}
+dd($stats);

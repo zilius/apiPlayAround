@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace Src\App\Integrations\Infrastructure;
 
 use Config;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as GuzzleClient;
 use Src\App\Interfaces\ClientInterface;
 
-class SuperMetricsClient implements ClientInterface
+class Client implements ClientInterface
 {
 
     private string $apiUrl;
-    private Client $client;
+    private GuzzleClient $client;
 
     public function __construct()
     {
         $this->apiUrl = Config::get('supermetrics.api.url');
-        $this->client = new Client();
+        $this->client = new GuzzleClient();
     }
 
     public function get(string $path, array $params): array

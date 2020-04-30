@@ -2,7 +2,8 @@
     "require": {
         "guzzlehttp/guzzle": "~6.0",
         "phpfastcache/phpfastcache": "^8.0",
-        "larapack/dd": "1.*"
+        "larapack/dd": "1.*",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {

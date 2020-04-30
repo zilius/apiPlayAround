@@ -9,12 +9,13 @@ use DateTime;
 use Phpfastcache\Exceptions\PhpfastcacheSimpleCacheException;
 use Phpfastcache\Helper\Psr16Adapter;
 use Psr\Cache\InvalidArgumentException;
-use Src\App\Integrations\Infrastructure\SuperMetricsClient;
+use Src\App\Integrations\Infrastructure\Client;
+use Src\App\Integrations\SuperMetrics\Domain\StatisticsFormatter;
 
-class SuperMetricsService
+class Service
 {
-    /** @var SuperMetricsClient client */
-    private SuperMetricsClient $client;
+    /** @var Client client */
+    private Client $client;
 
     /** @var Psr16Adapter cache */
     private Psr16Adapter $cache;
@@ -27,7 +28,7 @@ class SuperMetricsService
     {
 
         $this->cache = $cache;
-        $this->client = new SuperMetricsClient();
+        $this->client = new Client();
     }
 
     /**
@@ -85,35 +86,38 @@ class SuperMetricsService
      */
     public function makeStatisticsHappen(array $posts): array
     {
-        $postsByMonth = [];
+
+        $statisticsFormatter = new StatisticsFormatter();
+
         $statsArray = [];
 
-        //assign each post to each month
-        foreach ($posts as $post) {
-
-            $time = DateTime::createFromFormat('Y-m-d\TH:i:s+', $post['created_time'])->format('Y-m');
-            $postsByMonth[$time][] = $post;
-        }
+        $postsByMonth = $statisticsFormatter->groupMessagesByMonth($posts);
 
         foreach ($postsByMonth as $key => $monthsPosts) {
 
-            $sumMshLength = 0;
+            $sumMsgLength = 0;
             $longestPosts = [];
             $longestPostLen = 0;
             $weekPosts = [];
-            $userPostCount = [];
+            $usersWhoPosted = [];
 
             foreach ($monthsPosts as $monthPost) {
+
                 $postLength = strlen($monthPost["message"]);
-                $sumMshLength += $postLength;
+                $sumMsgLength += $postLength;
                 $weekNumber = DateTime::createFromFormat('Y-m-d\TH:i:s+', $monthPost['created_time'])->format('W');
+                $userId = $monthPost['from_id'];
+
 
                 if (!isset($weekPosts[$weekNumber])) {
                     $weekPosts[$weekNumber] = 1;
-                }
-                else
-                {
+                } else {
                     $weekPosts[$weekNumber]++;
+                }
+
+
+                if (!in_array($userId, $usersWhoPosted)) {
+                    $usersWhoPosted[] = $userId;
                 }
 
                 if ($longestPostLen < $postLength) {
@@ -125,11 +129,10 @@ class SuperMetricsService
                 }
             }
 
-
-            $statsArray[$key]["AvgPostLength"] = round($sumMshLength / count($monthsPosts), 2);
+            $statsArray[$key]["AvgPostLength"] = round($sumMsgLength / count($monthsPosts), 2);
             $statsArray[$key]["LongestPosts"] = $longestPosts;
             $statsArray[$key]["WeeklyPosts"] = $weekPosts;
-            $statsArray[$key]["UserPostsCount"] = $userPostCount;
+            $statsArray[$key]["AvgPostsPerUser"] = round(count($monthsPosts) / count($usersWhoPosted), 2);
 
         }
 

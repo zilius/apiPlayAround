@@ -1,6 +1,5 @@
 app_name = supermetrics
 
-export MYSQL_PORT = 3310
 export HTTP_PORT = 8080
 export COMPOSE_PROJECT_NAME = supermetrics
 
@@ -11,6 +10,7 @@ init:
 	touch tmp/nginx/error.log
 	make up
 	make composer-install
+	make composer cmd="dump-autoload -o"
 
 up:
 	docker-compose up
