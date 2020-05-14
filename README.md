@@ -6,7 +6,7 @@ Fetch the posts of a fictional user on a fictional social platform and process t
  
 Design the above to be generic, extendable and easy to maintain by other staff members.
  
-<h2>Requimets</h2>
+<h2>Requiments</h2>
 <ul>
 <li>Docker</li>
 <li>Makefile support</li>
