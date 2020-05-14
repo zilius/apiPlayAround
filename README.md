@@ -1,3 +1,11 @@
+Task
+
+Register a short-lived token on the fictional Supermetrics Social Network REST API
+ 
+Fetch the posts of a fictional user on a fictional social platform and process their posts. You will have 1000 posts over a six month period. Show stats on the following: - Average character length of a post / month - Longest post by character length / month - Total posts split by week - Average number of posts per user / month
+ 
+Design the above to be generic, extendable and easy to maintain by other staff members.
+ 
 <h2>Requimets</h2>
 <ul>
 <li>Docker</li>
